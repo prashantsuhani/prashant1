@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Suggi ❤️ Muggi</title>
+
+<style>
+body{
+  margin:0;
+  background:black;
+  color:white;
+  text-align:center;
+  font-family:sans-serif;
+  overflow:hidden;
+}
+
+/* LOCK SCREEN */
+#lockScreen{
+ position:fixed;
+ width:100%;
+ height:100%;
+ background:black;
+ display:flex;
+ flex-direction:column;
+ justify-content:center;
+ align-items:center;
+ z-index:999;
+}
+
+/* typing */
+#typing{
+ font-size:35px;
+ margin-top:80px;
+}
+
+/* buttons */
+.btn{
+ padding:12px 25px;
+ margin:20px;
+ border:none;
+ border-radius:10px;
+ font-size:18px;
+ cursor:pointer;
+}
+
+#yes{background:red;color:white;}
+#no{background:gray;color:white;position:absolute;}
+
+.hidden{display:none}
+
+/* hearts */
+.heart{
+ position:absolute;
+ color:red;
+ animation:float 5s linear infinite;
+}
+@keyframes float{
+ 0%{transform:translateY(100vh);}
+ 100%{transform:translateY(-10vh);}
+}
+
+/* slideshow */
+img{
+ width:250px;
+ height:250px;
+ object-fit:cover;
+ border-radius:20px;
+ margin-top:20px;
+ box-shadow:0 0 20px red;
+}
+
+/* heart */
+.big-heart{
+ font-size:80px;
+ animation:beat 1s infinite;
+}
+@keyframes beat{
+ 50%{transform:scale(1.3);}
+}
+</style>
+
+</head>
+
+<body>
+
+<!-- 🔒 LOCK -->
+
+<div id="lockScreen">
+  <h1>🔒 Secret Love Page</h1>
+  <h2>Enter Our Secret Code ❤️</h2>
+  <input type="password" id="pass" placeholder="Enter code">
+  <br><br>
+  <button onclick="unlock()" class="btn">Unlock 💖</button>
+</div>
+
+<!-- 🎵 MUSIC -->
+
+<audio id="music" loop>
+  <source src="song.mp3" type="audio/mpeg">
+</audio>
+
+<h1 id="typing"></h1>
+
+<button id="yes" class="btn hidden">Yes ❤️</button> <button id="no" class="btn hidden">No 😜</button>
+
+<div id="loveSection" class="hidden">
+  <h1>Suggi ❤️ Muggi</h1>
+  <div class="big-heart">❤️</div>
+
+  <img id="slide">
+
+  <h2>Type: I love you too</h2>
+  <input id="answer">
+  <br><br>
+  <button onclick="check()">Submit</button>
+</div>
+
+<div id="final" class="hidden">
+  <h1>I Love You Muggi 💖</h1>
+  <h2>Forever Yours, Suggi ❤️</h2>
+  <h1>🎉🎉🎉</h1>
+
+<br><br> <button onclick="letter()" class="btn">Read My Heart 💌</button>
+
+</div>
+
+<script>
+
+/* 🔒 unlock */
+function unlock(){
+ let p=document.getElementById("pass").value;
+ if(p==="suggimuggi123"){
+   document.getElementById("lockScreen").style.display="none";
+ }else{
+   alert("Wrong code 😜");
+ }
+}
+
+/* typing */
+let text="Muggi... Do you love me? ❤️";
+let i=0;
+function type(){
+ if(i<text.length){
+  document.getElementById("typing").innerHTML+=text.charAt(i);
+  i++;
+  setTimeout(type,80);
+ }else{
+  yes.classList.remove("hidden");
+  no.classList.remove("hidden");
+ }
+}
+type();
+
+/* NO button move */
+const no=document.getElementById("no");
+no.addEventListener("mouseover",()=>{
+ no.style.left=Math.random()*window.innerWidth+"px";
+ no.style.top=Math.random()*window.innerHeight+"px";
+});
+
+/* YES click */
+yes.onclick=()=>{
+ typing.classList.add("hidden");
+ yes.classList.add("hidden");
+ no.classList.add("hidden");
+ loveSection.classList.remove("hidden");
+ music.play();
+};
+
+/* slideshow */
+let images=[
+ "https://images.unsplash.com/photo-1518199266791-5375a83190b7",
+ "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70",
+ "https://images.unsplash.com/photo-1516589091380-5d8e87df6999",
+ "https://images.unsplash.com/photo-1502784444185-1a3f5c1e7b74",
+ "https://images.unsplash.com/photo-1492724441997-5dc865305da7"
+];
+
+let s=0;
+document.getElementById("slide").src=images[0];
+
+setInterval(()=>{
+ s=(s+1)%images.length;
+ document.getElementById("slide").src=images[s];
+},2000);
+
+/* answer */
+function check(){
+ let val=document.getElementById("answer").value.toLowerCase();
+ if(val.includes("i love you too")){
+  loveSection.classList.add("hidden");
+  final.classList.remove("hidden");
+ }else{
+  alert("Type correct 😜");
+ }
+}
+
+/* 💌 LOVE LETTER FINAL */
+function letter(){
+ alert(
+ "Muggi ❤️\n\n" +
+ "Jab se tum meri life me aayi ho,\n" +
+ "sab kuch itna beautiful lagne laga hai...\n\n" +
+
+ "Tumhari smile meri sabse badi khushi hai 😊\n" +
+ "Aur tumhari awaaz mere din ka best part 💖\n\n" +
+
+ "Kabhi kabhi bas tumhe dekh ke hi\n" +
+ "dil ko sukoon mil jata hai...\n\n" +
+
+ "Main promise karta hoon,\n" +
+ "hamesha tumhe khush rakhne ki koshish karunga ❤️\n\n" +
+
+ "Tum meri life ka sabse special part ho Muggi 💕\n\n" +
+
+ "– Tumhara Suggi ❤️"
+ );
+}
+
+/* hearts */
+setInterval(()=>{
+ let h=document.createElement("div");
+ h.className="heart";
+ h.innerHTML="❤️";
+ h.style.left=Math.random()*100+"vw";
+ h.style.fontSize=(20+Math.random()*20)+"px";
+ document.body.appendChild(h);
+ setTimeout(()=>h.remove(),5000);
+},300);
+
+</script>
+
+</body>
+</html>
